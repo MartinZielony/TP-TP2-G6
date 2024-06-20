@@ -1,4 +1,6 @@
+//Archivo de conexión, gestiona la conexión con la base de datos MySQL mediante Sequelize
 import { Sequelize } from "sequelize";
+//Importamos valores seteados en el .env y el config.js
 import {
   DB_NAME,
   DB_USER,
@@ -8,6 +10,7 @@ import {
   DB_PORT,
 } from "../config/config.js";
 
+//Creamos la conexión
 const connection = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
   host:  DB_HOST,
   dialect: DB_DIALECT,

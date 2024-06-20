@@ -3,14 +3,14 @@ import routes from "./Routes/routes.js";
 import morgan from "morgan";
 import connection from "./connection/connection.js";
 import { SERVER_PORT } from "./config/config.js";
-//import cookieParser from "cookie-parser";
+import cookieParser from "cookie-parser";
 //import { roleSeed } from "./seed/roleSeed.js";
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(morgan("tiny"));
-//app.use(cookieParser());
+app.use(cookieParser());
 
 app.use(routes);
 

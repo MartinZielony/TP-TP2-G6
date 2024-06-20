@@ -1,5 +1,5 @@
 import { User, Role } from "../Models/models.js";
-import { genToken, verifyToken } from "../utils/token.js";
+//Controlador del modelo Usuario, gestiona las funciones CRUD a ser ejecutadas desde los endpoints
 
 class UserController {
   async getAllUsers(req, res) {
@@ -100,20 +100,9 @@ class UserController {
         id: data.id,
         name: data.name,
       };
-      const token = genToken(payload);
-      res.cookie("token", token);
       res
         .status(200)
         .send({ success: true, message: "usuario logueado con exito" });
-    } catch (error) {
-      res.status(400).send({ success: false, message: error.message });
-    }
-  };
-
-  me = async (req, res) => {
-    try {
-      const { user } = req;
-      res.status(200).send({ success: true, message: user });
     } catch (error) {
       res.status(400).send({ success: false, message: error.message });
     }
