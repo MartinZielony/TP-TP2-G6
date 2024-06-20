@@ -1,9 +1,9 @@
 import { Router } from "express";
 import userRoute from "./userRoute.js";
-//import productRoutes from "./productRoutes.js";
+import recipeRoute from "./recipeRoute.js";
 
 const routes = Router();
-//routes.use("/product", productRoutes);
+routes.use("/recipe", recipeRoute);
 routes.use("/user", userRoute);
 
 export default routes;

@@ -2,7 +2,7 @@ import { User, Role } from "../Models/models.js";
 import { genToken, verifyToken } from "../utils/token.js";
 
 class UserController {
-  async getAllUser(req, res) {
+  async getAllUsers(req, res) {
     try {
       const result = await User.findAll({
         attributes: ["id", "name", "mail", "roleId"],

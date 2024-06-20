@@ -30,11 +30,8 @@ User.init(
 );
 
 User.beforeCreate(async (user) => {
-  // console.log(`🚀 ~ User.beforeCreate ~ user:`, user)
   const genSalt = await bcrypt.genSalt(10);
-  // console.log(`🚀 ~ User.beforeCreate ~ genSalt:`, genSalt);
   const hashedPassword = await bcrypt.hash(user.password, genSalt);
-  // console.log(`🚀 ~ User.beforeCreate ~ hashedPassword:`, hashedPassword)
   user.password = hashedPassword;
 });
 

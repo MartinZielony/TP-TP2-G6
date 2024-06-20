@@ -10,7 +10,7 @@ userRoute.post("/", userController.createUser);
 
 userRoute.get("/me", validateLogin, userController.me);
 userRoute.use(validateLogin);
-userRoute.get("/", userController.getAllUser);
+userRoute.get("/", userController.getAllUsers);
 userRoute.get("/:id", userController.getUserById);
 userRoute.put("/:id", userController.updateUser);
 userRoute.delete("/:id", userController.deleteUser);
