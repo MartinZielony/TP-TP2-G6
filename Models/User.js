@@ -1,6 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import connection from "../connection/connection.js";
 import bcrypt from "bcrypt";
+import Role from "./Role.js";
 class User extends Model {
   comparePass = async (password) => {
     const compare = await bcrypt.compare(password, this.password);
@@ -22,6 +23,10 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    roleId: {
+      type: Role,
+      allowNull: false,
+    }
   },
   {
     sequelize: connection,

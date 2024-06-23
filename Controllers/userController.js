@@ -19,12 +19,6 @@ class UserController {
   async getUserById(req, res) {
     try {
       const { id } = req.params;
-      // const result = await User.findOne({
-      //   attributes: ["id", "name", "mail"],
-      //   where: {
-      //     id,
-      //   },
-      // });
       const result = await User.findByPk(id);
       res.status(200).send({ success: true, message: result });
     } catch (error) {
