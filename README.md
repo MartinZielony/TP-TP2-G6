@@ -30,7 +30,7 @@ Este es el trabajo práctico integrador del grupo 6 en TP2, basado en el backend
 {
 	"name":  "nombre",
 	"password":  "contraseña",
-	"email":  "mail"
+	"mail":  "mail"
 }
 ```
 - En ambos casos se repite el formato para los UPDATE mediante el método HTTP PUT
