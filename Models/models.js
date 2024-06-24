@@ -1,3 +1,4 @@
+// Models.js aquí definimos y gestionamos las asociaciones entre los modelos de la base de datos.
 import Role from "./Role.js";
 import { User, defineAssociations as defineUserAssociations } from "./User.js";
 import { Recipe, defineAssociations as defineRecipeAssociations } from "./Recipe.js";

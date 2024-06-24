@@ -105,3 +105,5 @@ class RecipeController {
 }
 
 export default RecipeController;
+
+// Este archivo contiene la lógica del negocio para manejar las operaciones relacionadas con las recetas. Se encarga de recibir las solicitudes de los clientes, interactuar con la base de datos a través del modelo Recipe, y devolver las respuestas adecuadas al cliente.

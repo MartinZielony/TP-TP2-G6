@@ -1,3 +1,5 @@
+// Este archivo actúa como un punto central ya que registramos y manejamos todas las rutas definidas en los diferentes módulos de nuestra aplicación.
+
 import { Router } from "express";
 import userRoute from "./userRoute.js";
 import recipeRoute from "./recipeRoute.js";
