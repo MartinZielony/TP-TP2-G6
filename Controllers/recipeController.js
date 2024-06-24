@@ -1,103 +1,105 @@
-import { Recipe } from "../Models/models.js";
-//Controlador del modelo Receta, gestiona las funciones CRUD a ser ejecutadas desde los endpoints.
+import { Recipe, User } from "../Models/models.js";
 
 class RecipeController {
-    /**
-     * Devuelve todas las recetas.
-     * @param {req} req Obligatorio para el metodo, por más que no se use
-     * @param {res} res Devuelve el status y un mensaje; este incluye todas las recetas en un JSON o un mensaje de error si lo hubiera.
-     */
     async getAllRecipes(req, res) {
         try {
-            const result = await Recipe.findAll({
+            const recipes = await Recipe.findAll({
                 attributes: ["id", "title", "image", "description", "steps", "ingredients"],
+                include: {
+                    model: User,
+                    attributes: ["name"], 
+                    as: 'author'  
+                },
             });
-            res.status(200).send({ success: true, message: result });
+
+            const formattedRecipes = recipes.map(recipe => ({
+                id: recipe.id,
+                title: recipe.title,
+                image: recipe.image,
+                description: recipe.description,
+                steps: recipe.steps,
+                ingredients: recipe.ingredients,
+                author: recipe.author.name 
+            }));
+
+            res.status(200).send({ success: true, message: formattedRecipes });
         } catch (error) {
-            res.status(400).send({ success: false, message: error });
+            res.status(400).send({ success: false, message: error.message });
         }
     }
-    /**
-     * Devuelve una receta de acuerdo al id recibido
-     * @param {req} req Incluye el id por el cual se filtra
-     * @param {res} res Devuelve el status y un mensaje; este incluye la receta solicitada en un JSON o un mensaje de error si lo hubiera.
-     */
+
     async getRecipeById(req, res) {
         try {
             const { id } = req.params;
-            const result = await Recipe.findByPk(id);
-            res.status(200).send({ success: true, message: result });
+            const recipe = await Recipe.findByPk(id, {
+                include: {
+                    model: User,
+                    attributes: ["name"], 
+                    as: 'author' 
+                },
+            });
+
+            if (!recipe) {
+                return res.status(404).send({ success: false, message: "Receta no encontrada" });
+            }
+
+            const formattedRecipe = {
+                id: recipe.id,
+                title: recipe.title,
+                image: recipe.image,
+                description: recipe.description,
+                steps: recipe.steps,
+                ingredients: recipe.ingredients,
+                author: recipe.author.name 
+            };
+
+            res.status(200).send({ success: true, message: formattedRecipe });
         } catch (error) {
-            res.status(400).send({ success: false, message: error });
+            res.status(400).send({ success: false, message: error.message });
         }
     }
 
-    /**
-     * Crea una nueva receta con la información recibida
-     * @param {req} req Incluye la informacion de la receta
-     * @param {res} res Devuelve el status y un mensaje; este será de éxito si la receta se pudo crear o de error si no, incluyendo el mensaje de error.
-     */
     async createRecipe(req, res) {
         try {
-            const { title, image, description, steps, ingredients } = req.body;
+            const { title, image, description, steps, ingredients, authorId } = req.body;
             const result = await Recipe.create({
                 title,
                 image,
                 description,
                 steps,
-                ingredients
+                ingredients,
+                authorId, 
             });
             res.status(200).send({
                 success: true,
-                message: `Receta ${result.dataValues.title} creada con exito`,
+                message: `Receta ${result.title} creada con éxito`,
             });
         } catch (error) {
             res.status(400).send({ success: false, message: error.message });
         }
     }
-    /**
-     * Actualiza una receta en base a la informacion recibida en el req
-     * @param {req} req Incluye los datos que se quieran actualizar y su nuevo valor
-     * @param {res} res Devuelve el status y un mensaje; este será de éxito si la receta se pudo actualizar o de error si no, incluyendo el mensaje de error.
-     */
+
     async updateRecipe(req, res) {
         try {
             const { id } = req.params;
             const { title, image, description, steps, ingredients } = req.body;
             const result = await Recipe.update(
                 { title, image, description, steps, ingredients },
-                {
-                    where: {
-                        id,
-                    },
-                }
+                { where: { id } }
             );
-            res
-                .status(200)
-                .send({ success: true, message: "receta modificada con exito" });
+            res.status(200).send({ success: true, message: "Receta modificada con éxito" });
         } catch (error) {
-            res.status(400).send({ success: false, message: error });
+            res.status(400).send({ success: false, message: error.message });
         }
     }
 
-    /**
-     * Elimina una receta de acuerdo al id pasado en el req
-     * @param {req} req Incluye el id de la receta que se quiera eliminar
-     * @param {res} res Devuelve el status y un mensaje; este será de éxito si la receta se pudo eliminar o de error si no, incluyendo el mensaje de error.
-     */
     async deleteRecipe(req, res) {
         try {
             const { id } = req.params;
-            const result = await Recipe.destroy({
-                where: {
-                    id,
-                },
-            });
-            res
-                .status(200)
-                .send({ success: true, message: "Receta eliminada con exito" });
+            const result = await Recipe.destroy({ where: { id } });
+            res.status(200).send({ success: true, message: "Receta eliminada con éxito" });
         } catch (error) {
-            res.status(400).send({ success: false, message: error });
+            res.status(400).send({ success: false, message: error.message });
         }
     }
 }

@@ -2,6 +2,8 @@ import { DataTypes, Model } from "sequelize";
 import connection from "../connection/connection.js";
 import bcrypt from "bcrypt";
 import Role from "./Role.js";
+import { Recipe } from "./Recipe.js";
+
 class User extends Model {
   comparePass = async (password) => {
     const compare = await bcrypt.compare(password, this.password);
@@ -24,9 +26,13 @@ User.init(
       allowNull: false,
     },
     roleId: {
-      type: Role,
+      type: DataTypes.INTEGER,
       allowNull: false,
-    }
+      references: {
+        model: Role,
+        key: "id",
+      },
+    },
   },
   {
     sequelize: connection,
@@ -40,4 +46,9 @@ User.beforeCreate(async (user) => {
   user.password = hashedPassword;
 });
 
-export default User;
+function defineAssociations() {
+  User.belongsTo(Role, { foreignKey: "roleId" });
+  User.hasMany(Recipe, { foreignKey: "authorId", as: "recipes" }); 
+}
+
+export { User, defineAssociations };

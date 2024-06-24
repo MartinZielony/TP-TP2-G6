@@ -9,21 +9,22 @@ Este es el trabajo práctico integrador del grupo 6 en TP2, basado en el backend
  - Esta es la estructura que deberá seguir el body de un POST de creación de **receta**:
 ```    
 {
-        "title": "Titulo de la receta",
-        "image": "URL a la Imagen de la receta",
-        "description": "Descripcion",
-        "steps": [
-            "Paso1",
-            "Paso2",
-            "Etc"
-        ],
-        "ingredients": [
-            {
-                "quantity": "cantidad",
-                "ingredient": "nombre"
-            }
-        ]
+  "title": "Título de la receta",
+  "image": "URL a la Imagen de la receta",
+  "description": "Descripción de la receta",
+  "steps": [
+    "Paso 1: Descripción del paso 1",
+    "Paso 2: Descripción del paso 2",
+    "Etc."
+  ],
+  "ingredients": [
+    { "quantity": "cantidad", "ingredient": "nombre del ingrediente" },
+    { "quantity": "cantidad", "ingredient": "nombre del ingrediente" },
+    { "quantity": "cantidad", "ingredient": "nombre del ingrediente" }
+  ],
+  "authorId": numero_de_id_usuario
 }
+
 ```
  - Esta es la estructura que deberá seguir el body de un POST de creación de **usuario**:
  ```    

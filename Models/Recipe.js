@@ -1,9 +1,8 @@
-import { DataTypes, Model, Sequelize } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 import connection from "../connection/connection.js";
+import { User } from "./User.js";
 
-class Recipe extends Model {
-
-}
+class Recipe extends Model {}
 
 Recipe.init(
     {
@@ -19,15 +18,18 @@ Recipe.init(
             type: DataTypes.STRING,
             allowNull: false,
         },
-        //Los aributos de la receta que se presenten en listas vienen en formato JSON, ya que MySQL no soporta tipos de arrays nativamente.
         steps: {
             type: DataTypes.JSON,
-            allowNull: false
+            allowNull: false,
         },
         ingredients: {
             type: DataTypes.JSON,
-            allowNull: false
-        }
+            allowNull: false,
+        },
+        authorId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
     },
     {
         sequelize: connection,
@@ -35,4 +37,8 @@ Recipe.init(
     }
 );
 
-export default Recipe;
+function defineAssociations() {
+    Recipe.belongsTo(User, { foreignKey: "authorId", as: "author" });
+}
+
+export { Recipe, defineAssociations };
