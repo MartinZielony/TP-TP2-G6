@@ -25,7 +25,7 @@ Este es el trabajo práctico integrador del grupo 6 en TP2, basado en el backend
   "authorId": numero_de_id_usuario
 }
 
-```
+
  - Esta es la estructura que deberá seguir el body de un POST de creación de **usuario**:
  ```    
 {
@@ -44,3 +44,4 @@ Este es el trabajo práctico integrador del grupo 6 en TP2, basado en el backend
 }
 ```
 - En todos los casos se repite el formato para los UPDATE mediante el método HTTP PUT
+```
