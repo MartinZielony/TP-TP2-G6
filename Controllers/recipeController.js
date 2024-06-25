@@ -21,7 +21,7 @@ class RecipeController {
                 ingredients: recipe.ingredients,
                 author: recipe.author.name 
             }));
-
+            if (formattedRecipes.length == 0) {throw new Error("No hay recetas!")}
             res.status(200).send({ success: true, message: formattedRecipes });
         } catch (error) {
             res.status(400).send({ success: false, message: error.message });
@@ -38,11 +38,7 @@ class RecipeController {
                     as: 'author' 
                 },
             });
-
-            if (!recipe) {
-                return res.status(404).send({ success: false, message: "Receta no encontrada" });
-            }
-
+            if (recipe == null) {throw new Error("No se encontró la receta!")}
             const formattedRecipe = {
                 id: recipe.id,
                 title: recipe.title,
@@ -83,6 +79,7 @@ class RecipeController {
         try {
             const { id } = req.params;
             const { title, image, description, steps, ingredients } = req.body;
+            if (!await Recipe.findByPk(id)) {throw new Error("No se encontró la receta!")}
             const result = await Recipe.update(
                 { title, image, description, steps, ingredients },
                 { where: { id } }
@@ -97,6 +94,7 @@ class RecipeController {
         try {
             const { id } = req.params;
             const result = await Recipe.destroy({ where: { id } });
+            if (!await Recipe.findByPk(id)) {throw new Error("No se encontró la receta!")}
             res.status(200).send({ success: true, message: "Receta eliminada con éxito" });
         } catch (error) {
             res.status(400).send({ success: false, message: error.message });

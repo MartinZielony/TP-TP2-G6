@@ -7,8 +7,6 @@
   "scripts": {
     "start": "node --env-file .env  .",
     "dev": "node --env-file .env --watch . ",
-    "seed": "node --env-file .env seed/roleSeed.js",
-    "test": "node --env-file .env server.js",
     "build": "webpack "
   },
   "author": "El Legendario Grupo 6",

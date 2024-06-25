@@ -32,7 +32,15 @@ Este es el trabajo práctico integrador del grupo 6 en TP2, basado en el backend
 	"name":  "nombre",
 	"password":  "contraseña",
 	"mail":  "mail",
-    "roleId": numero
+  "roleId": numero
 }
 ```
-- En ambos casos se repite el formato para los UPDATE mediante el método HTTP PUT
+
+```
+ - Esta es la estructura que deberá seguir el body de un POST de creación de **rol**:
+ ```    
+{
+	"name":  "nombre"
+}
+```
+- En todos los casos se repite el formato para los UPDATE mediante el método HTTP PUT

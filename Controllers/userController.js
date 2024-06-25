@@ -11,18 +11,20 @@ class UserController {
           attributes: ["name"],
         },
       });
+      if (result.length == 0) {throw new Error("No hay usuarios!")}
       res.status(200).send({ success: true, message: result });
     } catch (error) {
-      res.status(400).send({ success: false, message: error });
+      res.status(400).send({ success: false, message: error.message });
     }
   }
   async getUserById(req, res) {
     try {
       const { id } = req.params;
       const result = await User.findByPk(id);
+      if (result == null) {throw new Error("No se encontró el usuario!")}
       res.status(200).send({ success: true, message: result });
     } catch (error) {
-      res.status(400).send({ success: false, message: error });
+      res.status(400).send({ success: false, message: error.message });
     }
   }
 
@@ -43,10 +45,13 @@ class UserController {
       res.status(400).send({ success: false, message: error.message });
     }
   }
+
   async updateUser(req, res) {
     try {
       const { id } = req.params;
       const { name, mail, password } = req.body;
+      //Si no se encuentra el usuario el request falla, se tira error.
+      if (!await User.findByPk(id)) {throw new Error("No se encontró el usuario!")}
       const result = await User.update(
         { name, mail, password },
         {
@@ -59,13 +64,15 @@ class UserController {
         .status(200)
         .send({ success: true, message: "usuario modificado con exito" });
     } catch (error) {
-      res.status(400).send({ success: false, message: error });
+      res.status(400).send({ success: false, message: error.message });
     }
   }
 
   async deleteUser(req, res) {
     try {
       const { id } = req.params;
+      //Si no se encuentra el usuario el request falla, se tira error.
+      if (!await User.findByPk(id)) {throw new Error("No se encontró el usuario!")}
       const result = await User.destroy({
         where: {
           id,
@@ -75,7 +82,7 @@ class UserController {
         .status(200)
         .send({ success: true, message: "usuario eliminado con exito" });
     } catch (error) {
-      res.status(400).send({ success: false, message: error });
+      res.status(400).send({ success: false, message: error.message });
     }
   }
 

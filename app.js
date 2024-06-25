@@ -1,16 +1,14 @@
 import express from "express";
 import routes from "./Routes/routes.js";
-import morgan from "morgan";
 import connection from "./connection/connection.js";
 import { SERVER_PORT } from "./config/config.js";
-import cookieParser from "cookie-parser";
 import { Role, User, Recipe } from "./Models/models.js"; 
+import morgan from "morgan";
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(morgan("tiny"));
-app.use(cookieParser());
+app.use(morgan("tiny"))
 
 app.use(routes);
 
