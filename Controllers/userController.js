@@ -72,12 +72,15 @@ class UserController {
     try {
       const { id } = req.params;
       //Si no se encuentra el usuario el request falla, se tira error.
-      if (!await User.findByPk(id)) {throw new Error("No se encontró el usuario!")}
+      //if (!await User.findByPk(id)) {throw new Error("No se encontró el usuario!")}
+      
       const result = await User.destroy({
         where: {
           id,
         },
       });
+      console.log(result);
+      if (result == 0) {throw new Error("No se encontró el usuario!")}
       res
         .status(200)
         .send({ success: true, message: "usuario eliminado con exito" });

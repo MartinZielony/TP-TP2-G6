@@ -3,8 +3,11 @@ import Role from "./Role.js";
 import { User, defineAssociations as defineUserAssociations } from "./User.js";
 import { Recipe, defineAssociations as defineRecipeAssociations } from "./Recipe.js";
 
+
+//El contenido de estos métodos podía ir en este mismo archivo
 defineUserAssociations();
 defineRecipeAssociations();
+//
 
 Role.hasMany(User, { foreignKey: "roleId" });
 User.belongsTo(Role, { foreignKey: "roleId" });

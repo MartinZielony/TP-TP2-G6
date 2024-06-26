@@ -24,6 +24,9 @@ User.init(
     mail: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        isEmail: true,
+      }
     },
     roleId: {
       type: DataTypes.INTEGER,
@@ -32,6 +35,9 @@ User.init(
         model: Role,
         key: "id",
       },
+      validate: {
+        isInt: true,
+      }
     },
   },
   {
